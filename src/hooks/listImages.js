@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { url, key } from "./configuration";
 
-const listImages = () => {
+const listImages = (imageId = null) => {
   const [state, setState] = useState({
     loading: false,
     error: null,
@@ -16,7 +16,9 @@ const listImages = () => {
         loading: true,
       }));
 
-      const response = await fetch(url + "/images", {
+      const imageParam = imageId ? "/" + imageId : "";
+
+      const response = await fetch(url + "/images" + imageParam, {
         method: "GET",
         headers: {
           Authorization: key,
@@ -24,13 +26,18 @@ const listImages = () => {
       });
 
       const data = await response.json();
-      setState((prevState) => ({
-        loading: false,
-        error: null,
-        data: data,
-      }));
-
-      // handle Error once i get familair with the API
+      if (data.message) {
+        setState((prevState) => ({
+          ...prevState,
+          error: data.message,
+        }));
+      } else if (data) {
+        setState((prevState) => ({
+          loading: false,
+          error: null,
+          data: data,
+        }));
+      }
     };
 
     fetchData();

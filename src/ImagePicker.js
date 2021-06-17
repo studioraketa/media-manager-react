@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { P, PanelTitle, Button, Modal, theme } from "@raketa-cms/raketa-mir";
 import * as elements from "@raketa-cms/raketa-mir";
-import { listImages } from "./hooks/fetchHooks";
+import { listImages } from "./hooks/listImages";
 
 import ImagePickModal from "./components/ImagePickModal/ImagePickModal";
 
@@ -21,7 +21,7 @@ const ImagePicker = () => {
 
   const chooseImage = chooseImageModal ? <ImagePickModal /> : null;
 
-  const data = listImages();
+  const data = listImages(10);
   console.log(data);
 
   return (
