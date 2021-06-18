@@ -1,48 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { ThemeProvider } from "styled-components";
 import { P, PanelTitle, Button, Modal, theme } from "@raketa-cms/raketa-mir";
 import * as elements from "@raketa-cms/raketa-mir";
 import { listImages } from "./hooks/listImages";
 
-import ImagePickModal from "./components/ImagePickModal/ImagePickModal";
+import ImagePickModal from "./components/ImagePickModal";
+import AltTextModal from "./components/AltTextModal";
 
-const ImagePicker = () => {
-  const [altTextModal, setAltTextModal] = useState(false);
+const ImagePicker = (props) => {
+  const [loadedImage, setLoadedImage] = useState({});
+  const [fetchError, setFetchError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [chooseImageModal, setChooseImageModal] = useState(false);
+  const [altTextModal, setAltTextModal] = useState(false);
 
-  const editAltTextModal = altTextModal ? (
-    <Modal>
-      <P>Test Modal. This should change to form. Use separate component</P>
-      <Button onClick={() => setAltTextModal((prevState) => !prevState)}>
-        X
-      </Button>
-    </Modal>
-  ) : null;
+  const label = props.label || "IMAGE";
+  const value = props.label || loadedImage; //replace with {}
+  //  const onChange = props.onChange
 
-  const chooseImage = chooseImageModal ? <ImagePickModal /> : null;
+  const { error, loading, data } = listImages(7);
 
-  const data = listImages(10);
-  console.log(data);
+  useEffect(() => {
+    if (loading !== isLoading) setIsLoading(loading);
+    if (data) setLoadedImage(data);
+    if (error) setFetchError(error);
+  }, [data, loading, error]);
 
-  return (
-    <ThemeProvider theme={theme}>
-      {editAltTextModal}
-      {chooseImage}
-      <img
-        src="https://drscdn.500px.org/group_avatar/119/q%3D85_w%3D100_h%3D100/v2?webp=true&v=1444807087&sig=ebf04bc5e7c8cb87b9b145c471e985591309e4886b3243c0b1d653f830a23b31"
-        width="100"
-        height="100"
-      />
-      <PanelTitle>IMAGE</PanelTitle>
-      <P>Alt: Very-long-image-title-here-666-slayer-and-tesni-picheta-999</P>
-      <Button onClick={() => setAltTextModal((prevState) => !prevState)}>
-        alt text
-      </Button>
-      <Button onClick={() => setChooseImageModal((prevState) => !prevState)}>
-        choose img
-      </Button>
-    </ThemeProvider>
-  );
+  console.log(loadedImage);
+
+  const dataToDisplay =
+    isLoading || !("urls" in value) ? (
+      <P>future fancy loader</P>
+    ) : (
+      <>
+        {altTextModal && <AltTextModal setAltTextModal={setAltTextModal} />}
+        {chooseImageModal && <ImagePickModal />}
+        <img src={value.urls.original} width="200" height="200" />
+        <PanelTitle>{label}</PanelTitle>
+        <P>Alt: {value.name}</P>
+        <Button onClick={() => setAltTextModal((prevState) => !prevState)}>
+          alt text
+        </Button>
+        <Button onClick={() => setChooseImageModal((prevState) => !prevState)}>
+          choose img
+        </Button>
+        <Button>clear image</Button>
+      </>
+    );
+
+  return <ThemeProvider theme={theme}>{dataToDisplay}</ThemeProvider>;
 };
 
 export default ImagePicker;
