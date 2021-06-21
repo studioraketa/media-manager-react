@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { ThemeProvider } from "styled-components";
 import { P, PanelTitle, Button, Modal, theme } from "@raketa-cms/raketa-mir";
-import * as elements from "@raketa-cms/raketa-mir";
-import { listImages } from "./hooks/listImages";
+import * as mir from "@raketa-cms/raketa-mir";
+import listImages from "./hooks/listImages";
 
 import ImagePickModal from "./components/ImagePickModal";
 import AltTextModal from "./components/AltTextModal";
@@ -26,14 +26,17 @@ const ImagePicker = (props) => {
     if (error) setFetchError(error);
   }, [data, loading, error]);
 
-  console.log(loadedImage);
-
   const dataToDisplay =
     isLoading || !("urls" in value) ? (
       <P>future fancy loader</P>
     ) : (
       <>
-        {altTextModal && <AltTextModal setAltTextModal={setAltTextModal} />}
+        {altTextModal && (
+          <AltTextModal
+            setAltTextModal={setAltTextModal}
+            currentAltText={value.name}
+          />
+        )}
         {chooseImageModal && <ImagePickModal />}
         <img src={value.urls.original} width="200" height="200" />
         <PanelTitle>{label}</PanelTitle>
