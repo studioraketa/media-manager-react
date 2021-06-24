@@ -15,8 +15,8 @@ export default function LibrariesDropDown(props) {
     setShowDropDown(false);
   };
 
-  const librariesToDisplay = fetchedLibraries.data ? (
-    fetchedLibraries.data.map((el) => (
+  const librariesToDisplay = fetchedLibraries ? (
+    fetchedLibraries.map((el) => (
       <button key={el.uid} onClick={() => handleLibrarySelect(el)}>
         {el.name}
       </button>
@@ -24,6 +24,7 @@ export default function LibrariesDropDown(props) {
   ) : (
     <mir.P>No libraires</mir.P>
   );
+  console.log(fetchedLibraries);
 
   return (
     <div>

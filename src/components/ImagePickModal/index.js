@@ -23,6 +23,12 @@ export default function ImagePickModal(props) {
     loading: false,
   });
 
+  const [libraryData, setLibraryData] = useState({
+    error: "",
+    data: [],
+    loading: false,
+  });
+
   const fetchedImages = listImages();
   const fetchedLibraries = listLibraries();
 
@@ -37,14 +43,12 @@ export default function ImagePickModal(props) {
 
   useEffect(() => {
     if (fetchedLibraries.loading !== imageData.loading)
-      setImageData({ ...imageData, loading: fetchedLibraries.loading });
+      setLibraryData({ ...imageData, loading: fetchedLibraries.loading });
     if (fetchedLibraries.data)
-      setImageData({ ...imageData, data: fetchedLibraries.data });
+      setLibraryData({ ...imageData, data: fetchedLibraries.data });
     if (fetchedLibraries.error)
-      setImageData({ ...imageData, error: fetchedLibraries.error });
+      setLibraryData({ ...imageData, error: fetchedLibraries.error });
   }, [fetchedLibraries.error, fetchedLibraries.loading, fetchedLibraries.data]);
-
-  console.log(fetchedLibraries);
 
   return (
     <Modal>
@@ -52,14 +56,19 @@ export default function ImagePickModal(props) {
       <LibrariesDropDown
         selectedLibrary={selectedLibrary}
         setSelectedLibrary={setSelectedLibrary}
-        fetchedLibraries={fetchedLibraries}
+        fetchedLibraries={libraryData.data}
       />
       <GalleryView
         imagesData={fetchedImages}
         selectedImage={selectedImage}
         setSelectedImage={setSelectedImage}
       />
-      <DetailsView selectedImage={selectedImage} />
+      <DetailsView
+        selectedImage={selectedImage}
+        selectedLibrary={selectedLibrary}
+        setSelectedLibrary={setSelectedLibrary}
+        fetchedLibraries={libraryData.data}
+      />
       <Button onClick={() => closeModal((prev) => !prev)}>close</Button>
     </Modal>
   );
