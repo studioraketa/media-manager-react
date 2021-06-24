@@ -32,12 +32,11 @@ const ImagePicker = (props) => {
     ) : (
       <>
         {altTextModal && (
-          <AltTextModal
-            setAltTextModal={setAltTextModal}
-            currentAltText={value.name}
-          />
+          <AltTextModal setAltTextModal={setAltTextModal} value={value} />
         )}
-        {chooseImageModal && <ImagePickModal />}
+        {chooseImageModal && (
+          <ImagePickModal closeModal={setChooseImageModal} />
+        )}
         <img src={value.urls.original} width="200" height="200" />
         <PanelTitle>{label}</PanelTitle>
         <P>Alt: {value.name}</P>
