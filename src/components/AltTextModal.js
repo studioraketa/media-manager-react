@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { updateImage } from "../hooks/updateImage";
+import updateImage from "../hooks/updateImage";
 
 import { P, Button, Modal } from "@raketa-cms/raketa-mir";
 import * as mir from "@raketa-cms/raketa-mir";

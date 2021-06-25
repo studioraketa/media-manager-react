@@ -24,7 +24,6 @@ export default function LibrariesDropDown(props) {
   ) : (
     <mir.P>No libraires</mir.P>
   );
-  console.log(fetchedLibraries);
 
   return (
     <div>
