@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 
 import { url, key } from "./configuration";
 
-const listLibraries = () => {
+import serializeParams from "./querrySerialize";
+
+const listLibraries = (...params) => {
   const [state, setState] = useState({
     loading: false,
     error: null,
@@ -16,7 +18,9 @@ const listLibraries = () => {
         loading: true,
       }));
 
-      const response = await fetch(url + "/libraries", {
+      const libraryParams = params.length ? "?" + serializeParams(params) : "";
+
+      const response = await fetch(url + "/libraries" + libraryParams, {
         method: "GET",
         headers: {
           Authorization: key,
