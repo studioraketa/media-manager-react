@@ -4,7 +4,7 @@ import { url, key } from "./configuration";
 
 import serializeParams from "./querrySerialize";
 
-const listImages = (params = []) => {
+const listImages = (...params) => {
   const [state, setState] = useState({
     loading: false,
     error: null,

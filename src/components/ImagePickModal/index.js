@@ -16,6 +16,7 @@ export default function ImagePickModal(props) {
 
   const [selectedImage, setSelectedImage] = useState();
   const [selectedLibrary, setSelectedLibrary] = useState();
+  const [querryParamsImages, setQuerryParamsImages] = useState([]);
 
   const [imageData, setImageData] = useState({
     error: "",
@@ -29,7 +30,12 @@ export default function ImagePickModal(props) {
     loading: false,
   });
 
-  const fetchedImages = listImages();
+  // fetch images data
+  const fetchedImages = querryParamsImages.length
+    ? listImages(querryParamsImages)
+    : listImages();
+
+  // fetch library
   const fetchedLibraries = listLibraries();
 
   useEffect(() => {
@@ -52,7 +58,10 @@ export default function ImagePickModal(props) {
 
   return (
     <Modal>
-      <SearchBar />
+      <SearchBar
+        querryParamsImages={querryParamsImages}
+        setQuerryParamsImages={setQuerryParamsImages}
+      />
       <LibrariesDropDown
         selectedLibrary={selectedLibrary}
         setSelectedLibrary={setSelectedLibrary}
