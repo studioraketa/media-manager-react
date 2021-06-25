@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 
 import { url, key } from "./configuration";
 
-const listImages = (imageId = null) => {
+import serializeParams from "./querrySerialize";
+
+const listImages = (...params) => {
   const [state, setState] = useState({
     loading: false,
     error: null,
@@ -16,9 +18,9 @@ const listImages = (imageId = null) => {
         loading: true,
       }));
 
-      const imageParam = imageId ? "/" + imageId : "";
+      const imageParams = params.length ? "?" + serializeParams(params) : "";
 
-      const response = await fetch(url + "/images" + imageParam, {
+      const response = await fetch(url + "/images" + imageParams, {
         method: "GET",
         headers: {
           Authorization: key,
@@ -46,4 +48,4 @@ const listImages = (imageId = null) => {
   return state;
 };
 
-export { listImages };
+export default listImages;
