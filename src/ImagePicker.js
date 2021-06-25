@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { ThemeProvider } from "styled-components";
 import { P, PanelTitle, Button, Modal, theme } from "@raketa-cms/raketa-mir";
 import * as mir from "@raketa-cms/raketa-mir";
-import listImages from "./hooks/listImages";
+import singleImageByID from "./hooks/singleImageByID";
 
 import ImagePickModal from "./components/ImagePickModal";
 import AltTextModal from "./components/AltTextModal";
@@ -15,10 +15,10 @@ const ImagePicker = (props) => {
   const [altTextModal, setAltTextModal] = useState(false);
 
   const label = props.label || "IMAGE";
-  const value = props.label || loadedImage; //replace with {}
+  const value = props.label || loadedImage;
   //  const onChange = props.onChange
 
-  const { error, loading, data } = listImages(7);
+  const { error, loading, data } = singleImageByID(7);
 
   useEffect(() => {
     if (loading !== isLoading) setIsLoading(loading);
@@ -37,7 +37,11 @@ const ImagePicker = (props) => {
         {chooseImageModal && (
           <ImagePickModal closeModal={setChooseImageModal} />
         )}
-        <img src={value.urls.original} width="200" height="200" />
+        <img
+          src={value.urls.original}
+          width={value.sizes.thumb.width}
+          height={value.sizes.thumb.height}
+        />
         <PanelTitle>{label}</PanelTitle>
         <P>Alt: {value.name}</P>
         <Button onClick={() => setAltTextModal((prevState) => !prevState)}>
