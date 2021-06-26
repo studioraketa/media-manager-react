@@ -13,6 +13,9 @@ export default function SearchBar(props) {
   const handleSubmit = (ev) => {
     ev.preventDefault();
     const previousValue = [...querryParamsImages];
+
+    // bug to fix - must filter previousValue to see if data for this param has already been recorded.
+
     previousValue.push({ name: search });
     setQuerryParamsImages(previousValue);
   };

@@ -66,6 +66,8 @@ export default function ImagePickModal(props) {
         selectedLibrary={selectedLibrary}
         setSelectedLibrary={setSelectedLibrary}
         fetchedLibraries={libraryData.data}
+        querryParamsImages={querryParamsImages}
+        setQuerryParamsImages={setQuerryParamsImages}
       />
       <GalleryView
         imagesData={fetchedImages}

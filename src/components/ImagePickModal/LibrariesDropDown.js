@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import * as mir from "@raketa-cms/raketa-mir";
 
 export default function LibrariesDropDown(props) {
-  const { selectedLibrary, setSelectedLibrary, fetchedLibraries } = props;
+  const {
+    selectedLibrary,
+    setSelectedLibrary,
+    fetchedLibraries,
+    setQuerryParamsImages,
+    querryParamsImages,
+  } = props;
+
   const [showDropDown, setShowDropDown] = useState(false);
 
   const handleMenu = (ev) => {
@@ -12,6 +19,12 @@ export default function LibrariesDropDown(props) {
 
   const handleLibrarySelect = (libraryObject) => {
     setSelectedLibrary(libraryObject);
+    const previousValue = [...querryParamsImages];
+
+    // bug to fix - must filter previousValue to see if data for this param has already been recorded.
+
+    previousValue.push({ library_uid: libraryObject.uid });
+    setQuerryParamsImages(previousValue);
     setShowDropDown(false);
   };
 
