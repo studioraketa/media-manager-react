@@ -9,33 +9,33 @@ import { url, key } from "./configuration";
  * @returns {Object} {fetchdata, state} object
  */
 
-const updateImage = (formData = null, imageID = "") => {
+const updateImage = () => {
   const [state, setState] = useState({
     loading: false,
     error: null,
     data: [],
   });
 
-  const fetchUpdateImage = async () => {
+  const fetchUpdateImage = async (formData = null, imageID = "") => {
     setState((prevState) => ({
       ...prevState,
       loading: true,
     }));
 
-    const response = await fetch(url + "/images" + imageID, {
+    const response = await fetch(url + "/images/" + imageID, {
       method: "PUT",
       headers: {
         Authorization: key,
         "Content-Type": "application/json",
       },
-      body: formData,
+      body: JSON.stringify(formData),
     });
 
     const data = await response.json();
-    if (data.message) {
+    if (data.errors) {
       setState((prevState) => ({
         ...prevState,
-        error: data.message,
+        error: data.errors,
       }));
     } else if (data) {
       setState((prevState) => ({
@@ -43,11 +43,10 @@ const updateImage = (formData = null, imageID = "") => {
         error: null,
         data: data,
       }));
+
+      return data;
     }
   };
-  useEffect(() => {
-    fetchUpdateImage();
-  }, []);
 
   return [fetchUpdateImage, state];
 };

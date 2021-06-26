@@ -16,7 +16,11 @@ const ImagePicker = (props) => {
 
   const label = props.label || "IMAGE";
   const value = props.label || loadedImage;
-  //  const onChange = props.onChange
+
+  // delete after onchange is fn is provided
+  const customOnChange = (object) =>
+    console.log("on change triggered with object:", object);
+  const onChange = props.onChange || customOnChange;
 
   const { error, loading, data } = singleImageByID(7);
 
@@ -32,7 +36,11 @@ const ImagePicker = (props) => {
     ) : (
       <>
         {altTextModal && (
-          <AltTextModal setAltTextModal={setAltTextModal} value={value} />
+          <AltTextModal
+            setAltTextModal={setAltTextModal}
+            value={value}
+            onChange={onChange}
+          />
         )}
         {chooseImageModal && (
           <ImagePickModal closeModal={setChooseImageModal} />

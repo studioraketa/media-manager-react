@@ -13,8 +13,6 @@ const listImages = (...params) => {
 
   const imageParams = params.length ? "?" + serializeParams(params) : "";
 
-  console.log(imageParams);
-
   const fetchData = async () => {
     setState((prevState) => ({
       ...prevState,

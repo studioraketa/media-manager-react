@@ -15,7 +15,6 @@ const serializeParams = (param) => {
   const paramsArray = [];
 
   param.flat().forEach((el) => {
-    console.log(el);
     for (const key in el) {
       // handle nested arrays of objects
       if (Array.isArray(el[key])) {

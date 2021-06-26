@@ -5,19 +5,23 @@ import { P, Button, Modal } from "@raketa-cms/raketa-mir";
 import * as mir from "@raketa-cms/raketa-mir";
 
 export default function AltTextModal(props) {
-  const setAltTextModal = props.setAltTextModal;
-  const value = props.value;
+  const { setAltTextModal, value, onChange } = props;
+
   const [altText, setAltText] = useState(value.name);
+
+  const [fetchData, data] = updateImage();
 
   const handleAltTextChange = (ev) => {
     ev.preventDefault();
     setAltText(ev.target.value);
   };
 
-  const handleAltTextSubmit = async (ev) => {
+  const handleAltTextSubmit = (ev) => {
     ev.preventDefault();
-    // call update alttext function and handle.
-    // allign how this will be rendered - from props or the component itself should handle it;
+    const requestBody = {
+      image: { settings: [{ key: "alt", value: altText }] },
+    };
+    fetchData(requestBody, value.id).then((res) => onChange(res));
   };
 
   return (
