@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import updateImage from "../../hooks/updateImage";
+import updateImage from "../../../hooks/updateImage";
 
 import SelectLibrary from "./SelectLibrary";
 

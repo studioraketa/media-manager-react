@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button } from "@raketa-cms/raketa-mir";
+import { Modal, Button, Tabs } from "@raketa-cms/raketa-mir";
 
 // components
-import DetailsView from "./DetailsView";
-import GalleryView from "./GalleryView";
 import SearchBar from "./SearchBar";
 import LibrariesDropDown from "./LibrariesDropDown";
+import BrowserTab from "./BrowserTab/BrowseTab";
+import UploadTab from "./UploadTab/UploadTab";
 
 // hooks
 import listImages from "../../hooks/listImages";
@@ -14,7 +14,6 @@ import listLibraries from "../../hooks/listLibraries";
 export default function ImagePickModal(props) {
   const { closeModal, onChange } = props;
 
-  const [selectedImage, setSelectedImage] = useState();
   const [selectedLibrary, setSelectedLibrary] = useState();
   const [querryParamsImages, setQuerryParamsImages] = useState([]);
 
@@ -69,18 +68,20 @@ export default function ImagePickModal(props) {
         querryParamsImages={querryParamsImages}
         setQuerryParamsImages={setQuerryParamsImages}
       />
-      <GalleryView
-        imagesData={fetchedImages}
-        selectedImage={selectedImage}
-        setSelectedImage={setSelectedImage}
-      />
-      <DetailsView
-        selectedImage={selectedImage}
-        setSelectedImage={setSelectedImage}
-        fetchedLibraries={fetchedLibraries}
-        onChange={onChange}
-        closeModal={closeModal}
-      />
+      <Tabs>
+        <div title="Browse">
+          <BrowserTab
+            fetchedImages={fetchedImages}
+            fetchedLibraries={fetchedLibraries}
+            onChange={onChange}
+            closeModal={closeModal}
+          />
+        </div>
+        <div title="Upload">
+          <UploadTab />
+        </div>
+      </Tabs>
+
       <Button onClick={() => closeModal((prev) => !prev)}>close</Button>
     </Modal>
   );
