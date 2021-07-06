@@ -4,7 +4,7 @@ import { P, PanelTitle, Button, Modal, theme } from "@raketa-cms/raketa-mir";
 import * as mir from "@raketa-cms/raketa-mir";
 import singleImageByID from "./hooks/singleImageByID";
 
-import ImagePickModal from "./components/ImagePickModal";
+import ImagePickModal from "./components/ImagePickModal/ImagePickModal";
 import AltTextModal from "./components/AltTextModal";
 
 const ImagePicker = (props) => {
