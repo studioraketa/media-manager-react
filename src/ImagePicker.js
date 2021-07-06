@@ -43,7 +43,10 @@ const ImagePicker = (props) => {
           />
         )}
         {chooseImageModal && (
-          <ImagePickModal closeModal={setChooseImageModal} />
+          <ImagePickModal
+            closeModal={setChooseImageModal}
+            onChange={onChange}
+          />
         )}
         <img
           src={value.urls.original}

@@ -22,6 +22,7 @@ export default function AltTextModal(props) {
       image: { settings: [{ key: "alt", value: altText }] },
     };
     fetchData(requestBody, value.id).then((res) => onChange(res));
+    setAltTextModal(false);
   };
 
   return (

@@ -12,7 +12,7 @@ import listImages from "../../hooks/listImages";
 import listLibraries from "../../hooks/listLibraries";
 
 export default function ImagePickModal(props) {
-  const { closeModal } = props;
+  const { closeModal, onChange } = props;
 
   const [selectedImage, setSelectedImage] = useState();
   const [selectedLibrary, setSelectedLibrary] = useState();
@@ -76,9 +76,10 @@ export default function ImagePickModal(props) {
       />
       <DetailsView
         selectedImage={selectedImage}
-        selectedLibrary={selectedLibrary}
-        setSelectedLibrary={setSelectedLibrary}
-        fetchedLibraries={libraryData.data}
+        setSelectedImage={setSelectedImage}
+        fetchedLibraries={fetchedLibraries}
+        onChange={onChange}
+        closeModal={closeModal}
       />
       <Button onClick={() => closeModal((prev) => !prev)}>close</Button>
     </Modal>
