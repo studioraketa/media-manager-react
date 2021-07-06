@@ -4,7 +4,7 @@ import { Modal, Button, Tabs } from "@raketa-cms/raketa-mir";
 // components
 import SearchBar from "./SearchBar";
 import LibrariesDropDown from "./LibrariesDropDown";
-import BrowserTab from "./BrowserTab/BrowseTab";
+import BrowseTab from "./BrowseTab/BrowseTab";
 import UploadTab from "./UploadTab/UploadTab";
 
 // hooks
@@ -70,7 +70,7 @@ export default function ImagePickModal(props) {
       />
       <Tabs>
         <div title="Browse">
-          <BrowserTab
+          <BrowseTab
             fetchedImages={fetchedImages}
             fetchedLibraries={fetchedLibraries}
             onChange={onChange}
