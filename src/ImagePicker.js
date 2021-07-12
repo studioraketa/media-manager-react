@@ -1,11 +1,36 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { ThemeProvider } from "styled-components";
-import { P, PanelTitle, Button, Modal, theme } from "@raketa-cms/raketa-mir";
+import {
+  P,
+  PanelTitle,
+  Button,
+  Label,
+  FormGroup,
+  Modal,
+  theme,
+} from "@raketa-cms/raketa-mir";
 import * as mir from "@raketa-cms/raketa-mir";
 import singleImageByID from "./hooks/singleImageByID";
+import styled from "styled-components";
 
 import ImagePickModal from "./components/ImagePickModal/ImagePickModal";
 import AltTextModal from "./components/AltTextModal";
+
+const ImageWrapper = styled.div`
+  margin-right: 16px;
+
+  & > img {
+    object-fit: contain;
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
+  }
+`;
+
+const ImageControl = styled.div`
+  display: flex;
+  margin: 16px;
+`;
 
 const ImagePicker = (props) => {
   const [loadedImage, setLoadedImage] = useState({});
@@ -48,20 +73,40 @@ const ImagePicker = (props) => {
             onChange={onChange}
           />
         )}
-        <img
-          src={value.urls.original}
-          width={value.sizes.thumb.width}
-          height={value.sizes.thumb.height}
-        />
-        <PanelTitle>{label}</PanelTitle>
-        <P>Alt: {value.name}</P>
-        <Button onClick={() => setAltTextModal((prevState) => !prevState)}>
-          alt text
-        </Button>
-        <Button onClick={() => setChooseImageModal((prevState) => !prevState)}>
-          choose img
-        </Button>
-        <Button>clear image</Button>
+        <ImageControl>
+          <ImageWrapper>
+            <img
+              src={value.urls.original}
+              width={value.sizes.thumb.width}
+              height={value.sizes.thumb.height}
+            />
+          </ImageWrapper>
+          <FormGroup>
+            <PanelTitle>{label}</PanelTitle>
+            <Label>Alt: {value.name}</Label>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => setChooseImageModal((prevState) => !prevState)}
+            >
+              Choose image...
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => setAltTextModal((prevState) => !prevState)}
+            >
+              Alt text
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => onChange({})}
+            >
+              X
+            </Button>
+          </FormGroup>
+        </ImageControl>
       </>
     );
 
