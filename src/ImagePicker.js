@@ -1,18 +1,19 @@
+// react
 import React, { useState, useEffect, Fragment } from "react";
-import { ThemeProvider } from "styled-components";
+
+// mir and styles
 import {
   P,
   PanelTitle,
   Button,
   Label,
   FormGroup,
-  Modal,
   theme,
 } from "@raketa-cms/raketa-mir";
-import * as mir from "@raketa-cms/raketa-mir";
 import singleImageByID from "./hooks/singleImageByID";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 
+// components
 import ImagePickModal from "./components/ImagePickModal/ImagePickModal";
 import AltTextModal from "./components/AltTextModal";
 
@@ -42,7 +43,7 @@ const ImagePicker = (props) => {
   const label = props.label || "IMAGE";
   const value = props.label || loadedImage;
 
-  // delete after onchange is fn is provided
+  // delete customOnChange after onchange fn is provided
   const customOnChange = (object) =>
     console.log("on change triggered with object:", object);
   const onChange = props.onChange || customOnChange;
@@ -57,7 +58,10 @@ const ImagePicker = (props) => {
 
   const dataToDisplay =
     isLoading || !("urls" in value) ? (
-      <P>future fancy loader</P>
+      <>
+        <P>future fancy loader</P>
+        {fetchError && <P>{fetchError}</P>}
+      </>
     ) : (
       <>
         {altTextModal && (
