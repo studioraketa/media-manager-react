@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { url, key } from "./configuration";
 
-const uploadImage = () => {
+/**
+ * Delete image from raketa image API
+ * @returns array with function to call the DELETE method, and statefull value in {loading, error, data} format
+ */
+const deleteImage = () => {
   const [state, setState] = useState({
     loading: false,
     error: null,
@@ -10,27 +14,23 @@ const uploadImage = () => {
   });
 
   /**
-   * Update image with PUT method
    * @async
-   * @param {File} file image to be uplaoded
-   * @param {Object} requestBody with info about the image properties
+   * @param {integer} imageId
    * @returns {Promise<string>} The data from the URL
    */
-  const fetchUploadImage = async (file, requestBody = null) => {
+  const fetchDeleteImage = async (imageId) => {
     setState((prevState) => ({
       ...prevState,
       loading: true,
     }));
 
-    const postForm = new FormData();
-    postForm.append("image", file);
+    const imageParam = imageId ? "/" + imageId : "";
 
-    const response = await fetch(url + "/images", {
-      method: "POST",
+    const response = await fetch(url + "/images" + imageParam, {
+      method: "DELETE",
       headers: {
         Authorization: key,
       },
-      body: postForm,
     });
 
     const data = await response.json();
@@ -48,7 +48,7 @@ const uploadImage = () => {
     }
   };
 
-  return [fetchUploadImage, state];
+  return [fetchDeleteImage, state];
 };
 
-export default uploadImage;
+export default deleteImage;

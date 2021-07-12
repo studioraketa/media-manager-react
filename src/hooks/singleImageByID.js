@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import { url, key } from "./configuration";
 /**
- *
  * @param {integer} imageId
  * @returns {error, loading, data} object
  */

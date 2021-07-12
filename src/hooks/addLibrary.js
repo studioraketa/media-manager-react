@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { url, key } from "./configuration";
 
+/**
+ * Create library in raketa image API
+ * @returns array with function to call the POST method, and statefull value in {loading, error, data} format
+ */
 const addLibrary = () => {
   const [data, setData] = useState({
     loading: false,
@@ -9,13 +13,18 @@ const addLibrary = () => {
     data: [],
   });
 
-  const fetchLibraries = async () => {
+  /**
+   * Function to call the POST method to raketa image API
+   * @param requestBody - object in format {library: { uid: "string",name: "string"}}
+   * @returns array with function to call the POST method, and statefull value in {loading, error, data} format
+   */
+  const fetchCreateLibrary = async (requestBody) => {
+    // validate input???
+
     setData((prevState) => ({
       ...prevState,
       loading: true,
     }));
-
-    const demoBody = { library: { uid: "demo-uid", name: "DemoLibrary" } };
 
     const response = await fetch(url + "/libraries", {
       method: "POST",
@@ -23,7 +32,7 @@ const addLibrary = () => {
         Authorization: key,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(demoBody),
+      body: JSON.stringify(requestBody),
     });
 
     const data = await response.json();
@@ -41,11 +50,7 @@ const addLibrary = () => {
     }
   };
 
-  useEffect(() => {
-    fetchLibraries();
-  }, []);
-
-  return [fetchLibraries, data];
+  return [fetchCreateLibrary, data];
 };
 
 export default addLibrary;

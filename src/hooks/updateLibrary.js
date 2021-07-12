@@ -2,7 +2,11 @@ import { useState } from "react";
 
 import { url, key } from "./configuration";
 
-const uploadImage = () => {
+/**
+ * Update image with PUT method
+ * @returns {Array} [fetchdata, state] arrey
+ */
+const updateLibrary = () => {
   const [state, setState] = useState({
     loading: false,
     error: null,
@@ -12,25 +16,23 @@ const uploadImage = () => {
   /**
    * Update image with PUT method
    * @async
-   * @param {File} file image to be uplaoded
-   * @param {Object} requestBody with info about the image properties
+   * @param {Object} requestBody the body of PUT request - object containing the new library data
+   * @param {Integer} libraryID id of the library to update
    * @returns {Promise<string>} The data from the URL
    */
-  const fetchUploadImage = async (file, requestBody = null) => {
+  const fetchUpdateLibrary = async (requestBody = {}, libraryID = "") => {
     setState((prevState) => ({
       ...prevState,
       loading: true,
     }));
 
-    const postForm = new FormData();
-    postForm.append("image", file);
-
-    const response = await fetch(url + "/images", {
-      method: "POST",
+    const response = await fetch(url + "/libraries/" + libraryID, {
+      method: "PUT",
       headers: {
         Authorization: key,
+        "Content-Type": "application/json",
       },
-      body: postForm,
+      body: JSON.stringify(requestBody),
     });
 
     const data = await response.json();
@@ -48,7 +50,7 @@ const uploadImage = () => {
     }
   };
 
-  return [fetchUploadImage, state];
+  return [fetchUpdateLibrary, state];
 };
 
-export default uploadImage;
+export default updateLibrary;

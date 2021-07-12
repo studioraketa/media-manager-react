@@ -8,7 +8,7 @@ const serialize = (params) =>
 
 /**
  *
- * @param {Array} param multiple objects, or array of objects. Each object can cotnain values as array of objects, for example {settings: [{alt: "alttext"}, {key: "value"}]}
+ * @param {Array} param multiple objects, or array of objects, for example {settings: [{alt: "alttext"}, {key: "value"}]}
  * @returns {String} serialized Querry string
  */
 const serializeParams = (param) => {

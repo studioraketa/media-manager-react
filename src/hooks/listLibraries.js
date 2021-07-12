@@ -4,6 +4,11 @@ import { url, key } from "./configuration";
 
 import serializeParams from "./querrySerialize";
 
+/**
+ * Get all libraries
+ * @params object  {libraries: {name: "searchstring"}}
+ * @returns {Object} statefull value in {loading, error, data} format
+ */
 const listLibraries = (...params) => {
   const [state, setState] = useState({
     loading: false,

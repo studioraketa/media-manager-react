@@ -73,6 +73,7 @@ export default function ImagePickModal(props) {
           <BrowseTab
             fetchedImages={fetchedImages}
             fetchedLibraries={fetchedLibraries}
+            setImageData={setImageData}
             onChange={onChange}
             closeModal={closeModal}
           />

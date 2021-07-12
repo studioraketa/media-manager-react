@@ -21,9 +21,9 @@
     "test:lint": "eslint ."
   },
   "peerDependencies": {
+    "@raketa-cms/raketa-mir": "^1.1.4",
     "react": "^16.0.0",
-    "styled-components": "^5.1.1",
-    "@raketa-cms/raketa-mir": "^1.1.4"
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
     "@raketa-cms/raketa-mir": "^1.1.4",
@@ -53,5 +53,8 @@
     "dist",
     "src/sass"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "@types/react-dropzone": "^5.1.0",
+    "react-dropzone": "^11.3.4"
+  }
 }

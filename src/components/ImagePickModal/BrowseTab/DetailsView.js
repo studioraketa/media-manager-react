@@ -11,6 +11,7 @@ export default function DetailsView(props) {
     onChange,
     selectedImage,
     fetchedLibraries,
+    handleDelete,
     setSelectedImage,
     closeModal,
   } = props;
@@ -61,7 +62,9 @@ export default function DetailsView(props) {
         <P>{selectedImage.name}</P>
         <P>{`${selectedImage.sizes.original.height} X ${selectedImage.sizes.original.width}`}</P>
         <P>image type TBD</P>
-        <Button>Delete</Button>
+        <Button onClick={handleDelete} id={selectedImage.id}>
+          Delete
+        </Button>
         <input type="text" value={altText} onChange={handleAltTextChange} />
         <SelectLibrary
           selectedLibrary={selectedLibrary}

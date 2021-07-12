@@ -4,9 +4,7 @@ import { url, key } from "./configuration";
 
 /**
  * Update image with PUT method
- * @param {Object} formData the body of PUT request - object containing the new iamge data
- * @param {Integer} imageID id of the image to update
- * @returns {Object} {fetchdata, state} object
+ * @returns {Array} [fetchdata, state] arrey
  */
 
 const updateImage = () => {
@@ -16,6 +14,13 @@ const updateImage = () => {
     data: [],
   });
 
+  /**
+   * Update image with PUT method
+   * @async
+   * @param {Object} formData the body of PUT request - object containing the new image data
+   * @param {Integer} imageID id of the image to update
+   * @returns {Promise<string>} The data from the URL
+   */
   const fetchUpdateImage = async (formData = null, imageID = "") => {
     setState((prevState) => ({
       ...prevState,

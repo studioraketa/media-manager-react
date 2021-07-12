@@ -4,6 +4,11 @@ import { url, key } from "./configuration";
 
 import serializeParams from "./querrySerialize";
 
+/**
+ * Get all images
+ * @params object with key - the search param(name, library, etc.) and value the search string. Works with nested objects with multiple params
+ * @returns {Object} statefull value in {loading, error, data} format
+ */
 const listImages = (...params) => {
   const [state, setState] = useState({
     loading: false,
