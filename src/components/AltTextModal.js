@@ -1,8 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import updateImage from "../hooks/updateImage";
+import styled from "styled-components";
 
-import { P, Button, Modal } from "@raketa-cms/raketa-mir";
-import * as mir from "@raketa-cms/raketa-mir";
+import { Label, Button, Modal, Input, FormGroup } from "@raketa-cms/raketa-mir";
+
+const ModalContent = styled.div`
+  max-height: 75vh;
+  overflow-y: auto;
+`;
+
+const ModalFooter = styled.div`
+  padding-top: ${(props) => props.theme.font.base};
+  border-top: 1px solid ${(props) => props.theme.colors.gray};
+`;
 
 export default function AltTextModal(props) {
   const { setAltTextModal, value, onChange } = props;
@@ -26,17 +36,30 @@ export default function AltTextModal(props) {
   };
 
   return (
-    <Modal>
-      <mir.FormGroup>
-        <form onSubmit={handleAltTextSubmit}>
-          <P>Enter new alt text:</P>
-          <input type="text" value={altText} onChange={handleAltTextChange} />
-          <Button type="submit">Confirm</Button>
-        </form>
-        <Button onClick={() => setAltTextModal((prevState) => !prevState)}>
-          Close
-        </Button>
-      </mir.FormGroup>
+    <Modal title="Change alt text" onClose={() => setAltTextModal(false)}>
+      <ModalContent>
+        <FormGroup onSubmit={handleAltTextSubmit}>
+          <Label>Enter new alt text:</Label>
+          <Input type="text" value={altText} onChange={handleAltTextChange} />
+        </FormGroup>
+
+        <ModalFooter>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={handleAltTextSubmit}
+          >
+            Confirm
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setAltTextModal((prevState) => !prevState)}
+          >
+            Close
+          </Button>
+        </ModalFooter>
+      </ModalContent>
     </Modal>
   );
 }
