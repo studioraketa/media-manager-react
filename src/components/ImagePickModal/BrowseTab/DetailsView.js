@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from "react";
 
+import styled from "styled-components";
+
 import updateImage from "../../../hooks/updateImage";
 
 import SelectLibrary from "./SelectLibrary";
 
-import { Button, P } from "@raketa-cms/raketa-mir";
+import {
+  Label,
+  Button,
+  Modal,
+  Input,
+  FormGroup,
+  P,
+} from "@raketa-cms/raketa-mir";
+
+const DetailsViewWrapper = styled.div`
+  max-width: 30%;
+  min-width: 30%;
+  display: inline-flex;
+`;
 
 export default function DetailsView(props) {
   const {
@@ -59,10 +74,15 @@ export default function DetailsView(props) {
     selectedImage && selectedImage.name ? (
       <aside>
         <img src={selectedImage.urls.original} height="200px" width="200px" />
-        <P>{selectedImage.name}</P>
-        <P>{`${selectedImage.sizes.original.height} X ${selectedImage.sizes.original.width}`}</P>
-        <P>image type TBD</P>
-        <Button onClick={handleDelete} id={selectedImage.id}>
+        <Label>{selectedImage.name}</Label>
+        <Label>{`${selectedImage.sizes.original.height} X ${selectedImage.sizes.original.width}`}</Label>
+        <Label>image type TBD</Label>
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={handleDelete}
+          id={selectedImage.id}
+        >
           Delete
         </Button>
         <input type="text" value={altText} onChange={handleAltTextChange} />
@@ -71,12 +91,16 @@ export default function DetailsView(props) {
           setSelectedLibrary={setSelectedLibrary}
           fetchedLibraries={fetchedLibraries}
         />
-        <Button onClick={handleUpdateImage}>Update Image</Button>
-        <Button onClick={handleSelectImage}>Select Image</Button>
+        <Button type="button" variant="secondary" onClick={handleUpdateImage}>
+          Update Image
+        </Button>
+        <Button type="button" variant="secondary" onClick={handleSelectImage}>
+          Select Image
+        </Button>
       </aside>
     ) : (
       <P>Please select image</P>
     );
 
-  return <div> {displayContent} </div>;
+  return <DetailsViewWrapper> {displayContent} </DetailsViewWrapper>;
 }

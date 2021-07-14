@@ -1,8 +1,33 @@
 import React from "react";
-import { Modal, P } from "@raketa-cms/raketa-mir";
+import styled from "styled-components";
+
+const ImageList = styled.div`
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  margin-top: 1em;
+  min-height: 500px;
+`;
+
+const Image = styled.img`
+  position: relative;
+  cursor: pointer;
+  width: 116px;
+  height: 116px;
+  border: 4px solid
+    ${(props) => (props.selected ? props.theme.colors.success : "transparent")};
+
+  &:hover {
+    border: 4px solid
+      ${(props) =>
+        props.selected
+          ? props.theme.colors.success
+          : props.theme.colors.grayDark};
+  }
+`;
 
 export default function GalleryView(props) {
-  const { imagesData, setSelectedImage } = props;
+  const { imagesData, selectedImage, setSelectedImage } = props;
 
   const handleselectImage = (ev) => {
     ev.preventDefault();
@@ -15,16 +40,17 @@ export default function GalleryView(props) {
   const imagesToDisplay =
     imagesData.data && imagesData.data.length
       ? imagesData.data.map((el) => (
-          <img
+          <Image
+            key={el.id}
             heigth="100px"
             width="100px"
             src={el.urls.original}
-            key={el.id}
             id={el.id}
+            selected={selectedImage ? el.id === selectedImage.id : false}
             onClick={handleselectImage}
           />
         ))
       : null;
 
-  return <div>{imagesToDisplay}</div>;
+  return <ImageList>{imagesToDisplay}</ImageList>;
 }

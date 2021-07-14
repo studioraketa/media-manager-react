@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Tabs } from "@raketa-cms/raketa-mir";
+import { Modal, Button, Tabs, FormGroup } from "@raketa-cms/raketa-mir";
+import styled from "styled-components";
 
 // components
 import SearchBar from "./SearchBar";
@@ -10,6 +11,22 @@ import UploadTab from "./UploadTab/UploadTab";
 // hooks
 import listImages from "../../hooks/listImages";
 import listLibraries from "../../hooks/listLibraries";
+
+const ModalContent = styled.div`
+  max-height: 75vh;
+  overflow-y: auto;
+`;
+
+const ModalFooter = styled.div`
+  padding-top: ${(props) => props.theme.font.base};
+  border-top: 1px solid ${(props) => props.theme.colors.gray};
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 16px;
+`;
 
 export default function ImagePickModal(props) {
   const { closeModal, onChange } = props;
@@ -56,34 +73,39 @@ export default function ImagePickModal(props) {
   }, [fetchedLibraries.error, fetchedLibraries.loading, fetchedLibraries.data]);
 
   return (
-    <Modal>
-      <SearchBar
-        querryParamsImages={querryParamsImages}
-        setQuerryParamsImages={setQuerryParamsImages}
-      />
-      <LibrariesDropDown
-        selectedLibrary={selectedLibrary}
-        setSelectedLibrary={setSelectedLibrary}
-        fetchedLibraries={libraryData.data}
-        querryParamsImages={querryParamsImages}
-        setQuerryParamsImages={setQuerryParamsImages}
-      />
-      <Tabs>
-        <div title="Browse">
-          <BrowseTab
-            fetchedImages={fetchedImages}
-            fetchedLibraries={fetchedLibraries}
-            setImageData={setImageData}
-            onChange={onChange}
-            closeModal={closeModal}
+    <Modal title="Choose new image" onClose={() => closeModal(false)}>
+      <ModalContent>
+        <ModalHeader>
+          <SearchBar
+            querryParamsImages={querryParamsImages}
+            setQuerryParamsImages={setQuerryParamsImages}
           />
-        </div>
-        <div title="Upload">
-          <UploadTab />
-        </div>
-      </Tabs>
-
-      <Button onClick={() => closeModal((prev) => !prev)}>close</Button>
+          <LibrariesDropDown
+            selectedLibrary={selectedLibrary}
+            setSelectedLibrary={setSelectedLibrary}
+            fetchedLibraries={libraryData.data}
+            querryParamsImages={querryParamsImages}
+            setQuerryParamsImages={setQuerryParamsImages}
+          />
+        </ModalHeader>
+        <Tabs>
+          <div title="Browse">
+            <BrowseTab
+              fetchedImages={fetchedImages}
+              fetchedLibraries={fetchedLibraries}
+              setImageData={setImageData}
+              onChange={onChange}
+              closeModal={closeModal}
+            />
+          </div>
+          <div title="Upload">
+            <UploadTab />
+          </div>
+        </Tabs>
+      </ModalContent>
+      <ModalFooter>
+        <Button onClick={() => closeModal((prev) => !prev)}>close</Button>
+      </ModalFooter>
     </Modal>
   );
 }

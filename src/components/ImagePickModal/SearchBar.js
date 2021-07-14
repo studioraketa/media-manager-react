@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, P } from "@raketa-cms/raketa-mir";
+import { Input } from "@raketa-cms/raketa-mir";
 
 export default function SearchBar(props) {
   const { setQuerryParamsImages, querryParamsImages } = props;
@@ -23,7 +23,12 @@ export default function SearchBar(props) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type="text" value={search} onChange={handleChange} />
+        <Input
+          type="text"
+          value={search}
+          onChange={handleChange}
+          placeholder="search..."
+        />
       </form>
     </div>
   );

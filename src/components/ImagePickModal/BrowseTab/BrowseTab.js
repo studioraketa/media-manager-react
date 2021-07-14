@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import deleteImage from "../../../hooks/deleteImage";
+import styled from "styled-components";
 
 // components
 import DetailsView from "./DetailsView";
 import GalleryView from "./GalleryView";
 
-// hooks
+const ModalLayout = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 export default function BrowseTab(props) {
   const {
@@ -27,7 +31,7 @@ export default function BrowseTab(props) {
 
   console.log(deleteImageResponse);
   return (
-    <section>
+    <ModalLayout>
       <GalleryView
         imagesData={fetchedImages}
         selectedImage={selectedImage}
@@ -41,6 +45,6 @@ export default function BrowseTab(props) {
         onChange={onChange}
         closeModal={closeModal}
       />
-    </section>
+    </ModalLayout>
   );
 }
