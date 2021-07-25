@@ -46,6 +46,7 @@ const uploadImage = () => {
         data: data,
       }));
     }
+    return data;
   };
 
   return [fetchUploadImage, state];

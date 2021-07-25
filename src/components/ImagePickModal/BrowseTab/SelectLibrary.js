@@ -12,7 +12,6 @@ export default function SelectLibrary(props) {
   };
 
   const handleLibrarySelect = (libraryObject) => {
-    console.log(libraryObject);
     setSelectedLibrary(libraryObject);
     setShowDropDown(false);
   };

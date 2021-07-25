@@ -29,7 +29,6 @@ export default function BrowseTab(props) {
     const deleteResponse = fetchDeleteImage(ev.target.id);
   };
 
-  console.log(deleteImageResponse);
   return (
     <ModalLayout>
       <GalleryView

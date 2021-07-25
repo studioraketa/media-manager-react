@@ -6,19 +6,13 @@ import updateImage from "../../../hooks/updateImage";
 
 import SelectLibrary from "./SelectLibrary";
 
-import {
-  Label,
-  Button,
-  Modal,
-  Input,
-  FormGroup,
-  P,
-} from "@raketa-cms/raketa-mir";
+import { Label, Button, P } from "@raketa-cms/raketa-mir";
 
 const DetailsViewWrapper = styled.div`
   max-width: 30%;
   min-width: 30%;
   display: inline-flex;
+  background-color: ${(props) => props.theme.colors.gray};
 `;
 
 export default function DetailsView(props) {
@@ -99,7 +93,7 @@ export default function DetailsView(props) {
         </Button>
       </aside>
     ) : (
-      <P>Please select image</P>
+      <P>Please select image for details</P>
     );
 
   return <DetailsViewWrapper> {displayContent} </DetailsViewWrapper>;
