@@ -11,6 +11,7 @@ import UploadTab from "./UploadTab/UploadTab";
 // hooks
 import listImages from "../../hooks/listImages";
 import listLibraries from "../../hooks/listLibraries";
+import deleteImage from "../../hooks/deleteImage";
 
 const ModalContent = styled.div`
   max-height: 75vh;
@@ -46,6 +47,20 @@ export default function ImagePickModal(props) {
     loading: false,
   });
 
+  const [fetchDeleteImage, deleteImageResponse] = deleteImage();
+
+  const [selectedImage, setSelectedImage] = useState();
+
+  const handleDelete = async (ev) => {
+    ev.preventDefault();
+    const deleteResponse = await fetchDeleteImage(ev.target.id);
+    console.log(imageData);
+    const images = imageData.data.filter((el) => {
+      return el.id !== deleteResponse.id;
+    });
+    setImageData({ ...imageData, data: images });
+  };
+
   // fetch images data
   const fetchedImages = querryParamsImages.length
     ? listImages(querryParamsImages)
@@ -55,21 +70,28 @@ export default function ImagePickModal(props) {
   const fetchedLibraries = listLibraries();
 
   useEffect(() => {
-    if (fetchedImages.loading !== imageData.loading)
+    setImageData(fetchedImages);
+    if (fetchedImages.loading !== imageData.loading) {
       setImageData({ ...imageData, loading: fetchedImages.loading });
-    if (fetchedImages.data)
-      setImageData({ ...imageData, data: fetchedImages.data });
-    if (fetchedImages.error)
+    }
+    if (fetchedImages.data.length) {
+      setImageData({
+        ...imageData,
+        data: fetchedImages.data,
+      });
+    }
+    if (fetchedImages.error) {
       setImageData({ ...imageData, error: fetchedImages.error });
-  }, [fetchedImages.error, fetchedImages.loading, fetchedImages.data]);
+    }
+  }, [fetchedImages.error, fetchedImages.loading, fetchedImages.data.length]);
 
   useEffect(() => {
     if (fetchedLibraries.loading !== imageData.loading)
-      setLibraryData({ ...imageData, loading: fetchedLibraries.loading });
+      setLibraryData({ ...libraryData, loading: fetchedLibraries.loading });
     if (fetchedLibraries.data)
-      setLibraryData({ ...imageData, data: fetchedLibraries.data });
+      setLibraryData({ ...libraryData, data: fetchedLibraries.data });
     if (fetchedLibraries.error)
-      setLibraryData({ ...imageData, error: fetchedLibraries.error });
+      setLibraryData({ ...libraryData, error: fetchedLibraries.error });
   }, [fetchedLibraries.error, fetchedLibraries.loading, fetchedLibraries.data]);
 
   return (
@@ -91,11 +113,16 @@ export default function ImagePickModal(props) {
         <Tabs>
           <div title="Browse">
             <BrowseTab
-              fetchedImages={fetchedImages}
+              fetchedImages={imageData}
               fetchedLibraries={fetchedLibraries}
               setImageData={setImageData}
               onChange={onChange}
               closeModal={closeModal}
+              fetchDeleteImage={fetchDeleteImage}
+              deleteImageResponse={deleteImageResponse}
+              selectedImage={selectedImage}
+              setSelectedImage={setSelectedImage}
+              handleDelete={handleDelete}
             />
           </div>
           <div title="Upload">

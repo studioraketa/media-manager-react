@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import deleteImage from "../../../hooks/deleteImage";
+import React from "react";
 import styled from "styled-components";
 
 // components
@@ -18,16 +17,12 @@ export default function BrowseTab(props) {
     setImageData,
     closeModal,
     onChange,
+    fetchDeleteImage,
+    deleteImageResponse,
+    selectedImage,
+    setSelectedImage,
+    handleDelete,
   } = props;
-
-  const [fetchDeleteImage, deleteImageResponse] = deleteImage();
-
-  const [selectedImage, setSelectedImage] = useState();
-
-  const handleDelete = async (ev) => {
-    ev.preventDefault();
-    const deleteResponse = fetchDeleteImage(ev.target.id);
-  };
 
   return (
     <ModalLayout>

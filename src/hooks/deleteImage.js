@@ -46,6 +46,8 @@ const deleteImage = () => {
         data: data,
       }));
     }
+
+    return data;
   };
 
   return [fetchDeleteImage, state];
