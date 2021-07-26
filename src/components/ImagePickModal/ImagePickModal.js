@@ -74,7 +74,7 @@ export default function ImagePickModal(props) {
     if (fetchedImages.loading !== imageData.loading) {
       setImageData({ ...imageData, loading: fetchedImages.loading });
     }
-    if (fetchedImages.data.length) {
+    if (fetchedImages.data) {
       setImageData({
         ...imageData,
         data: fetchedImages.data,
@@ -93,6 +93,8 @@ export default function ImagePickModal(props) {
     if (fetchedLibraries.error)
       setLibraryData({ ...libraryData, error: fetchedLibraries.error });
   }, [fetchedLibraries.error, fetchedLibraries.loading, fetchedLibraries.data]);
+
+  console.log(imageData);
 
   return (
     <Modal title="Choose new image" onClose={() => closeModal(false)}>
