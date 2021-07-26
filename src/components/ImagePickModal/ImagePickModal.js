@@ -114,7 +114,7 @@ export default function ImagePickModal(props) {
           <div title="Browse">
             <BrowseTab
               fetchedImages={imageData}
-              fetchedLibraries={fetchedLibraries}
+              fetchedLibraries={libraryData}
               setImageData={setImageData}
               onChange={onChange}
               closeModal={closeModal}

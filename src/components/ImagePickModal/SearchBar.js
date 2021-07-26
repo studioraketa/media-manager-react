@@ -14,9 +14,14 @@ export default function SearchBar(props) {
     ev.preventDefault();
     const previousValue = [...querryParamsImages];
 
-    // bug to fix - must filter previousValue to see if data for this param has already been recorded.
+    const isParamExisting = previousValue.find((el) => el.name);
 
-    previousValue.push({ name: search });
+    if (isParamExisting) {
+      isParamExisting.name = search;
+    } else {
+      previousValue.push({ name: search });
+    }
+
     setQuerryParamsImages(previousValue);
   };
 

@@ -21,9 +21,13 @@ export default function LibrariesDropDown(props) {
     setSelectedLibrary(libraryObject);
     const previousValue = [...querryParamsImages];
 
-    // bug to fix - must filter previousValue to see if data for this param has already been recorded.
+    const isParamExisting = previousValue.find((el) => el.library_uid);
 
-    previousValue.push({ library_uid: libraryObject.uid });
+    if (isParamExisting) {
+      isParamExisting.library_uid = libraryObject.uid;
+    } else {
+      previousValue.push({ library_uid: libraryObject.uid });
+    }
     setQuerryParamsImages(previousValue);
     setShowDropDown(false);
   };
@@ -43,7 +47,7 @@ export default function LibrariesDropDown(props) {
       <button onClick={handleMenu}>
         {selectedLibrary && selectedLibrary.name
           ? selectedLibrary.name
-          : "select library"}
+          : "All libraries"}
       </button>
       {showDropDown ? <div>{librariesToDisplay}</div> : null}
     </div>
