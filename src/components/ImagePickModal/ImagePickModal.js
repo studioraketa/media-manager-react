@@ -54,7 +54,6 @@ export default function ImagePickModal(props) {
   const handleDelete = async (ev) => {
     ev.preventDefault();
     const deleteResponse = await fetchDeleteImage(ev.target.id);
-    console.log(imageData);
     const images = imageData.data.filter((el) => {
       return el.id !== deleteResponse.id;
     });
@@ -93,8 +92,6 @@ export default function ImagePickModal(props) {
     if (fetchedLibraries.error)
       setLibraryData({ ...libraryData, error: fetchedLibraries.error });
   }, [fetchedLibraries.error, fetchedLibraries.loading, fetchedLibraries.data]);
-
-  console.log(imageData);
 
   return (
     <Modal title="Choose new image" onClose={() => closeModal(false)}>

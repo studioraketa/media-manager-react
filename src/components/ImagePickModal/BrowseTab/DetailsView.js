@@ -55,10 +55,14 @@ export default function DetailsView(props) {
     ev.preventDefault();
     const requestBody = {
       image: {
-        library_uid: selectedLibrary.uid,
         settings: [{ key: "alt", value: altText }],
       },
     };
+
+    if (selectedLibrary) {
+      Object.assign(requestBody.image, { library_uid: selectedLibrary.uid });
+    }
+
     fetchData(requestBody, selectedImage.id).then((res) => {
       setSelectedImage(res);
     });
