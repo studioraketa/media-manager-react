@@ -7,18 +7,15 @@ import GalleryView from "./GalleryView";
 
 const ModalLayout = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
 `;
 
 export default function BrowseTab(props) {
   const {
     fetchedImages,
     fetchedLibraries,
-    setImageData,
     closeModal,
     onChange,
-    fetchDeleteImage,
-    deleteImageResponse,
     selectedImage,
     setSelectedImage,
     handleDelete,

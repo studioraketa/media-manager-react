@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const ProgressWrapper = styled.div`
+const UploadStatusDetails = styled.div`
   max-width: 30%;
   min-width: 30%;
   display: inline-flex;
@@ -11,19 +11,21 @@ const ProgressWrapper = styled.div`
 const UploadStatus = (props) => {
   const { files } = props;
 
-  const dataToDisplay = files.length
-    ? files.map((el, index) => {
-        return (
-          <div key={index}>
-            <p>
-              status: {el.status}; name: {el.name}
-            </p>
-          </div>
-        );
-      })
-    : null;
+  const dataToDisplay = files.length ? (
+    files.map((el, index) => {
+      return (
+        <div key={index}>
+          <p>
+            status: {el.status}; name: {el.name}
+          </p>
+        </div>
+      );
+    })
+  ) : (
+    <p>no uploaded files</p>
+  );
 
-  return <ProgressWrapper>{dataToDisplay}</ProgressWrapper>;
+  return <UploadStatusDetails>{dataToDisplay}</UploadStatusDetails>;
 };
 
 export default UploadStatus;

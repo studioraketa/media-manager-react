@@ -4,9 +4,22 @@ import uploadImage from "../../../hooks/uploadImage";
 import UploadStatus from "./UplaodStatus";
 import styled from "styled-components";
 
-const ModalLayout = styled.div`
-  display: flex;
-  justify-content: space-between;
+const StyledDropzone = styled.div`
+  position: relative;
+  margin-bottom: 16px;
+  height: 350px;
+  color: #666;
+  background-color: #efefef;
+  border: 2px dashed #ddd;
+`;
+
+const DropzoneLabel = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 16px;
 `;
 
 export default function UploadTab() {
@@ -34,16 +47,20 @@ export default function UploadTab() {
   const [fetchUploadImage, state] = uploadImage();
 
   return (
-    <ModalLayout>
-      <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        {isDragActive ? (
-          <p>Drop the files here ...</p>
-        ) : (
-          <p>Drag 'n' drop some files here, or click to select files</p>
-        )}
-      </div>
+    <div>
+      <StyledDropzone>
+        <div {...getRootProps()}>
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <DropzoneLabel>Drop the files here ...</DropzoneLabel>
+          ) : (
+            <DropzoneLabel>
+              Drag 'n' drop some files here, or click to select files
+            </DropzoneLabel>
+          )}
+        </div>
+      </StyledDropzone>
       <UploadStatus files={uploadStatus} />
-    </ModalLayout>
+    </div>
   );
 }
