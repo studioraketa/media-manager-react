@@ -24,7 +24,11 @@ const uploadImage = () => {
 
     const postForm = new FormData();
     postForm.append("image", file);
-
+    if (requestBody) {
+      for (const key in requestBody) {
+        postForm.append(key, requestBody[key]);
+      }
+    }
     const response = await fetch(url + "/images", {
       method: "POST",
       headers: {
