@@ -125,7 +125,7 @@ export default function ImagePickModal(props) {
             />
           </div>
           <div title="Upload">
-            <UploadTab />
+            <UploadTab selectedLibrary={selectedLibrary} />
           </div>
         </Tabs>
       </ModalContent>

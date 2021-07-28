@@ -22,16 +22,20 @@ const DropzoneLabel = styled.div`
   padding: 16px;
 `;
 
-export default function UploadTab() {
+export default function UploadTab(props) {
+  const { selectedLibrary } = props;
   const [uploadStatus, setUploadStatus] = useState([]);
 
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback((acceptedFiles, selectedLibrary) => {
     if (acceptedFiles) {
       acceptedFiles.forEach(async (element) => {
         const currentData = uploadStatus;
         currentData.push({ name: element.name, status: "pending" });
         setUploadStatus(currentData);
-        const uploadResponse = await fetchUploadImage(element);
+        const formBody = selectedLibrary
+          ? { library_uid: selectedLibrary.uid }
+          : null;
+        const uploadResponse = await fetchUploadImage(element, formBody);
         if (uploadResponse) {
           const currentData = uploadStatus;
           const updateElement = currentData.find(
@@ -43,7 +47,9 @@ export default function UploadTab() {
       });
     }
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: (droppedFiles) => onDrop(droppedFiles, selectedLibrary),
+  });
   const [fetchUploadImage, state] = uploadImage();
 
   return (
